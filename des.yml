@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-Deployment
+  name: app-deployment
   namespace: devops-team
   labels:
     connection: connecting-the-Service
@@ -15,7 +15,7 @@ spec:
       - key: devops-env
         operator: In
         values:
-          - Version
+          - version
           - name
           - status
   strategy:
@@ -27,7 +27,7 @@ spec:
   template:
     metadata:
       labels:
-        spec: spec-info
+        devops-env: name
       name: spec-name
     spec:
       containers:
