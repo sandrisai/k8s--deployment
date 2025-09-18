@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata: 
   name: sercon
- 
+  namespace: devops-team
 spec:
   selector:
     connection: connecting-the-Service
