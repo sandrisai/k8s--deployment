@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-Deployment
+  namespace: devops-team
+  labels:
+    connection: connecting-the-Service
+  annotations:
+    addition: additional-info
+spec: 
+  replicas: 4
+  minReadySeconds: 5
+  selector:
+    matchExpressions:
+      - key: devops-env
+        operator: In
+        values:
+          - Version
+          - name
+          - status
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+
+  template:
+    metadata:
+      labels:
+        spec: spec-info
+      name: spec-name
+    spec:
+      containers:
+        - image: rajgandhi123/petclinic:v1
+          name: spring-petclinic
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          startupProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 2
+            successThreshold: 1
+            failureThreshold: 2
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - echo:hello
+            initialDelaySeconds: 5
+            periodSeconds: 2
+            successThreshold: 1
+            failureThreshold: 2 
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 2
+            successThreshold: 1
+            failureThreshold: 2
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1500Mi
+            requests:
+              cpu: 500m
+              memory: 500Mi
+            
